@@ -53,6 +53,10 @@ python3 -m unittest discover -s tests -v
 python3 skills/public-repo-release/scripts/audit_history.py .
 ```
 
-Run the history helper after creating a local commit. It returns nonzero for findings, incomplete coverage or binary objects requiring manual review. It is a pattern audit, not a security certificate, and reports no candidate secret values. The skill's frontmatter can also be checked with the `quick_validate.py` supplied by Codex's built-in skill-creator; that check does not evaluate model judgment.
+Run the history helper after creating a local commit. It returns nonzero for findings, incomplete coverage or binary objects requiring manual review.
+
+Pass the repository root, not an exported folder inside another checkout. Ordinary roots, linked worktrees and bare repositories are supported. Partial-clone settings and legacy graft files are rejected without changing them; use a separately authorized full clone or inspect those cases manually.
+
+A successful result covers committed Git history only, not unsaved files, submodule repositories or external Git LFS content. It is a pattern audit, not a security certificate, and reports no candidate secret values. The skill's frontmatter can also be checked with the `quick_validate.py` supplied by Codex's built-in skill-creator; that check does not evaluate model judgment.
 
 [Maintainer rules](AGENTS.md) · [MIT licence](LICENSE) · [Validation and limits](VALIDATION.md) · [Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [Initial release](docs/releases/0.1.0.md)

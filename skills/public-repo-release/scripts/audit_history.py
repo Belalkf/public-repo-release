@@ -21,8 +21,11 @@ def audit(root, seconds=60, max_objects=5000, max_bytes=2 * 1024 * 1024, total_b
     deadline = time.monotonic() + seconds
     environment = {key: value for key, value in os.environ.items() if not key.startswith('GIT_')}
     environment.update(GIT_OPTIONAL_LOCKS='0', GIT_TERMINAL_PROMPT='0',
+                       GIT_NO_LAZY_FETCH='1', GIT_ALLOW_PROTOCOL='',
                        GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_SYSTEM=os.devnull)
-    command = ['git', '--no-optional-locks', '--no-replace-objects', '-c', 'core.fsmonitor=false', '-C', str(Path(root).resolve())]
+    selected_root = Path(root).resolve()
+    command = ['git', '--no-optional-locks', '--no-replace-objects',
+               '-c', 'core.fsmonitor=false', '-c', 'protocol.allow=never', '-C', str(selected_root)]
     result = {'commits': 0, 'inspected_objects': 0, 'findings': [], 'unreviewed': [], 'issues': []}
 
     def run(arguments, data=None):
@@ -36,6 +39,24 @@ def audit(root, seconds=60, max_objects=5000, max_bytes=2 * 1024 * 1024, total_b
         return reply.stdout
 
     try:
+        bare = run(['rev-parse', '--is-bare-repository']).strip() == b'true'
+        location = run(['rev-parse', '--absolute-git-dir' if bare else '--show-toplevel'])
+        if not selected_root.samefile(os.fsdecode(location.rstrip(b'\n'))):
+            result['issues'].append('Select the repository root, not a folder inside another repository')
+            return {**result, 'complete': False}
+        configuration = run(['config', '--null', '--list', '--includes'])
+        keys = [entry.split(b'\n', 1)[0].lower() for entry in configuration.split(b'\0') if entry]
+        if any(key == b'extensions.partialclone' or
+               (key.startswith(b'remote.') and key.endswith((b'.promisor', b'.partialclonefilter')))
+               for key in keys):
+            result['issues'].append('Partial clone configuration is unsupported; no missing content was fetched')
+            return {**result, 'complete': False}
+        graft_path = Path(os.fsdecode(run(['rev-parse', '--git-path', 'info/grafts']).rstrip(b'\n')))
+        if not graft_path.is_absolute():
+            graft_path = selected_root / graft_path
+        if graft_path.exists():
+            result['issues'].append('Legacy graft file can hide earlier history; audit stopped without changing it')
+            return {**result, 'complete': False}
         if run(['rev-parse', '--is-shallow-repository']).strip() == b'true':
             result['issues'].append('Shallow repository; earlier history is unavailable')
         ids = run(['rev-list', '--objects', '--all', '--no-object-names']).splitlines()
