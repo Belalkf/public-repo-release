@@ -6,7 +6,25 @@ This is an experimental skill; independent end-to-end evaluation of agent behavi
 
 The skill covers the product boundary, newcomer workflow, privacy/history review, supported toolchains, hosted checks, practical branch protection, dependency maintenance, scanner triage and a truthful final handoff. It does not publish anything merely by being installed, and it does not activate paid services or rewrite history by default.
 
-## Use locally
+## Install with the skills CLI
+
+From the project where you use your coding agent, run:
+
+```sh
+npx skills add Belalkf/public-repo-release
+```
+
+Choose `public-repo-release` and your agent when prompted. Installation applies to the current project by default. Add `-g` to install for your user across projects:
+
+```sh
+npx skills add Belalkf/public-repo-release -g
+```
+
+This downloads the installer and the skill. It does not publish a repository or install the Python/Git prerequisites for the optional history helper. The [skills CLI](https://github.com/vercel-labs/skills) requires Node.js and supports Codex and Claude Code; consult its documentation for current Node requirements and agent paths. Review the skill before use, then refresh your agent's skill discovery as required by that host. In Codex, invoke `$public-repo-release`.
+
+The supported source location is `skills/public-repo-release/SKILL.md`. To inspect discovery without installing, run `npx skills add Belalkf/public-repo-release --list`. The installer uses network access and optional installation telemetry; see its [privacy controls](https://github.com/vercel-labs/skills/blob/main/docs/troubleshooting.md).
+
+## Use a local checkout
 
 The skill is in [skills/public-repo-release](skills/public-repo-release/SKILL.md). In a Codex environment that supports local skills, link that folder into your user skill directory, then invoke `$public-repo-release`. For example, from this checkout:
 
@@ -20,7 +38,7 @@ else
 fi
 ```
 
-Choose a different destination if that name already exists; preserve its contents. The command uses one source folder so edits and future Git history stay here. See [OpenAI's skill documentation](https://learn.chatgpt.com/docs/build-skills) for current discovery paths and refresh behaviour. Other hosts can read SKILL.md and its references directly if they support agent skills; automatic discovery outside the tested environment is not claimed.
+Choose a different destination if that name already exists; preserve its contents. The command uses one source folder so edits and future Git history stay here. See [OpenAI's skill documentation](https://learn.chatgpt.com/docs/build-skills) for current discovery paths and refresh behaviour. Installer compatibility is separate from whether an agent follows the workflow well.
 
 Example requests:
 
@@ -29,7 +47,7 @@ Example requests:
 - “Audit what is still missing from this public release, then complete the authorized fixes.”
 - “Use $public-repo-release to publish this skill repository on GitHub, including a current options review and proportionate hosted checks; do not create a marketplace or registry listing.”
 
-This is an initial public source release under the MIT licence. The install folder is `skills/public-repo-release`. Installing it grants no permission to publish any target repository. No marketplace or package-registry listing is provided.
+This is an initial public source release under the MIT licence. Installing it grants no permission to publish any target repository. The skills CLI can install directly from this GitHub repository; a skills.sh leaderboard entry depends on that directory's indexing and installation telemetry, not a separate Python or npm release.
 
 ## Try the helper safely
 
