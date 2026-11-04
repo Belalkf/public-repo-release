@@ -144,13 +144,15 @@ class HistoryAuditTests(unittest.TestCase):
         self.commit()
         with tempfile.TemporaryDirectory() as other:
             remote = Path(other) / 'remote.git'
-            subprocess.run(['git', 'clone', '-q', '--bare', str(self.root), str(remote)],
+            subprocess.run(['git', 'clone', '-q', '--bare', '--no-hardlinks', str(self.root), str(remote)],
                            check=True, capture_output=True, timeout=10)
             self.git('remote', 'add', 'origin', remote.as_uri())
             self.git('config', 'remote.origin.promisor', 'true')
             self.git('config', 'remote.origin.partialclonefilter', 'blob:none')
             oid = self.git('rev-parse', 'HEAD:file.txt').stdout.strip().decode()
             missing = self.root / '.git/objects' / oid[:2] / oid[2:]
+            # Only this disposable fixture is altered; Windows enforces Git's read-only bit.
+            missing.chmod(0o600)
             missing.unlink()
             before = self.snapshot_git_files()
             result = module.audit(self.root)
