@@ -2,6 +2,8 @@
 
 A reusable agent skill for taking a repository from private/local work to a usable public GitHub project, including the hosting protections and verification that are easy to miss. It helps finish an authorized release without treating a successful push or an empty scanner dashboard as the whole job.
 
+This is an initial skill with helper/package checks and one practical release application; independent agent-behaviour evaluation remains open.
+
 The skill covers the product boundary, newcomer workflow, privacy/history review, supported toolchains, hosted checks, practical branch protection, dependency maintenance, scanner triage and a truthful final handoff. It does not publish anything merely by being installed, and it does not activate paid services or rewrite history by default.
 
 ## Use locally
@@ -20,6 +22,7 @@ Example requests:
 - “Prepare a clean public edition of this private tool; do not push yet.”
 - “Publish this repository on my GitHub account and finish appropriate protections and hosted checks.”
 - “Audit what is still missing from this public release, then complete the authorized fixes.”
+- “Use $public-repo-release to publish this skill repository on GitHub, including a current options review and proportionate hosted checks; do not create a marketplace or registry listing.”
 
 This source package has no remote or publication by default. Publishing this skill itself is a separate explicit action. A future GitHub skill-installer path is `skills/public-repo-release`; no account URL, registry listing or marketplace availability is invented.
 

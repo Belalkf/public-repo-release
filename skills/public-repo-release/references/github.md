@@ -2,6 +2,16 @@
 
 Recheck current official documentation and the actual account's available settings; feature names, licences, runtimes and billing change. A public repository usually supports standard hosted CI and public security scanning without adding a local VM or a third-party service. Verify the actual feature before asserting that it is free or enabling a credit-consuming option.
 
+## Research current options before selecting them
+
+At each publication or hosting audit, consult GitHub's current [security quickstart](https://docs.github.com/en/code-security/getting-started/quickstart-for-securing-your-repository), relevant [repository settings guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features) and targeted [changelog entries](https://github.blog/changelog/). Search for changes affecting this deliverable, account type, supported languages, runner/runtime versions or intended distribution. Follow relevant discoveries into their current feature and billing documentation; do not conduct an exhaustive news sweep or assume a preview remains a preview.
+
+Compare those sources with the actual repository settings and effective rules. For relevant options, record a short decision in the target's release evidence: checked date, primary source, benefit/coverage, availability, cost or data-access implications, and enabled/left off/not applicable. Reuse still-current evidence within the same run; research does not authorize enabling everything. If online or account access is unavailable, distinguish prepared work from unverified hosting and do not invent current availability.
+
+Choose settings for the project's actual code and contribution workflow. A source-only skill release is different from an application deployment or registry upload. Unsupported code scanning or unnecessary deployment controls are not release blockers. Public repository access to a feature does not imply its AI usage is free; verify feature-level billing.
+
+Distinguish scanning an application for its use of AI from using AI to scan ordinary code. The latter can help a project that never calls a model. Select it by additional coverage, data handling and cost, rather than by whether the product itself uses AI. Re-read after saving and check actual results, not just a toggle.
+
 ## Establish the target and evidence
 
 Verify the destination owner, repository URL, visibility and current remote tip before each publication. Treat an existing same-name private repository as an original to preserve, not a target to make public by default. Use a public/noreply identity chosen for the task. Review both author and committer metadata; server-generated squash merges may need an explicit author email. Never fabricate a development timeline.

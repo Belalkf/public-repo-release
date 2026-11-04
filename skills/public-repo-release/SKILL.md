@@ -17,11 +17,13 @@ If the product decision is still open, check current primary alternatives and li
 
 ## Prepare a newcomer-usable project
 
-Make installation, one small synthetic demo and the common workflow work from a fresh checkout outside the author's workspace. Choose language/platform support from real evidence. Check declared runtime and build-tool compatibility, packaged resources, invalid inputs, cancellation, preservation of existing files and visible coverage gaps as relevant to the product. A no-build-isolation build can pass while a new build requirement cannot run on the oldest supported interpreter.
+Make installation, one small synthetic demo and the common workflow work from a fresh checkout outside the author's workspace. Choose language/platform support from real evidence. Check declared runtime and build-tool compatibility, packaged resources, invalid inputs, cancellation, preservation of existing files and visible coverage gaps as relevant to the product. Resolve declared build requirements on the oldest supported toolchain; preinstalled tools can conceal incompatible manifest changes.
 
 Give each subject one owner: README for the first journey, behaviour/architecture for contracts, contribution guidance for checks, and a release record for actual results and missing acceptance. Add a licence only within the author's rights. Include appropriate issue/security reporting routes and release metadata. Logos, marketplaces and registry uploads are optional, not public-readiness prerequisites.
 
 For prompt-generating tools, distinguish deterministic measurements from model judgment. Generate common instructions once, keep file entries factual, and put optional evidence behind a disclosure without omitting safety-critical gaps from the copied request. Do not describe a fixed prompt or path heuristic as architectural understanding.
+
+For repositories that distribute agent skills, including this skill itself, read [skill packages](references/skill-packages.md). Apply the same publication permissions and privacy review; invoking a skill on its own source grants no extra authority.
 
 ## Review what would become public
 
@@ -33,11 +35,11 @@ If an actual secret was published, revoke/rotate it first through the appropriat
 
 ## Publish and protect when authorized
 
-For GitHub publication, read [hosting and maintenance](references/github.md). Recheck the destination immediately before writing; stop an unexpected advance rather than overwrite it. Create a separate empty public repository if the chosen name belongs to a private original. Verify the public target and the private original after publishing.
+For each GitHub publication or hosting audit, proactively research current official security/settings guidance and relevant recent changelog entries, then inspect the actual target settings. Read [hosting and maintenance](references/github.md) for the research and selection criteria; saved feature lists are not current evidence. Recheck the destination immediately before writing; stop an unexpected advance rather than overwrite it. Create a separate empty public repository if the chosen name belongs to a private original. Verify the public target and the private original after publishing.
 
-Run proportional hosted checks on the supported platforms using standard public runners when available. Do not install a local VM, incur costs or add third-party services just to complete a release check. Inspect the actual job results and findings; enabling a scanner or having a workflow file does not establish successful analysis or absence of alerts.
+Run proportional hosted checks on the supported platforms using standard public runners when available. Prefer existing tools or standard hosted runners; a local VM, new service or billable usage needs a concrete task benefit and authorization. Inspect the actual job results and findings; enabling a scanner or having a workflow file does not establish successful analysis or absence of alerts.
 
-Configure useful protections before calling hosting complete: force-push/deletion protection, workable pull-request and CI gates, suitable secret/dependency/code scanning, private reporting, read-only workflow defaults and appropriate fork approvals. Avoid impossible self-approval rules for a solo maintainer. Inspect optional features and their costs instead of switching every checkbox on. Re-read settings after saving; a blank ruleset editor with enforcement disabled is not the active ruleset.
+Scale the setup to the deliverable: a documentation-only package may have no code-scanning language or build matrix. Record inapplicable checks rather than installing irrelevant infrastructure. Configure useful protections before calling hosting complete: force-push/deletion protection, workable pull-request and CI gates, suitable secret/dependency/code scanning, private reporting, read-only workflow defaults and appropriate fork approvals. Avoid impossible self-approval rules for a solo maintainer. Inspect optional features and their costs instead of switching every checkbox on. Re-read settings after saving; a blank ruleset editor with enforcement disabled is not the active ruleset.
 
 Review pending dependency requests rather than merging solely because they are newer or superficially green. Verify upstream changes, minimum toolchain/runtime requirements and the combined result against the current base. Merge suitable changes through the protected workflow; replace or close unsuitable proposals with an explicit compatibility reason within the authorized task. Keep human review meaningful; do not add automatic merging by default.
 
