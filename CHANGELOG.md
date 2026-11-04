@@ -2,6 +2,8 @@
 
 ## After v0.1.0 — available on main
 
+Installation instructions now include the skills CLI, with separate project and user scopes and an explicit distinction between installed instructions and helper prerequisites.
+
 The bundled history helper now rejects inputs that could invalidate its local, read-only audit. Users of the original tag should use current main for these fixes:
 
 - Require the selected repository root instead of silently auditing a parent repository.
