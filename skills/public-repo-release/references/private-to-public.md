@@ -24,6 +24,6 @@ Primary Git references: [partial clones and demand fetching](https://git-scm.com
 
 ## Interpret findings
 
-Expected public contact details or synthetic fixtures can trigger a pattern finding. Review their actual role; do not rewrite history, remove useful acknowledgements or dismiss a real credential merely to get a zero. An empty scan is not proof that no secret exists. Explain manual coverage and residual limits in the release record.
+Expected public contact details or synthetic fixtures can trigger a pattern finding. Review their actual role; do not rewrite history, remove useful acknowledgements or dismiss a real credential merely to get a zero. An empty scan is not proof that no secret exists. Keep enduring coverage limits in user documentation and report the actual manual review in the pull request or release handoff.
 
 If a real credential was exposed, revoke or rotate it first. History cleanup needs its own authorization and coordination because force updates, clones and cached references have consequences. See [GitHub's sensitive-data guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository). Never imply that deleting a commit makes a copied secret safe.
