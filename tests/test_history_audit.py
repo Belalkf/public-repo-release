@@ -85,3 +85,30 @@ class HistoryAuditTests(unittest.TestCase):
         result = module.audit(self.root)
         self.assertTrue(any(item['kind'] == 'github-token' for item in result['findings']))
         self.assertNotIn(secret, json.dumps(result))
+
+    def test_shallow_clone_does_not_claim_complete_history(self):
+        (self.root / 'file.txt').write_text('first')
+        self.commit()
+        (self.root / 'file.txt').write_text('second')
+        self.commit()
+        with tempfile.TemporaryDirectory() as other:
+            target = Path(other) / 'shallow'
+            subprocess.run(['git', 'clone', '-q', '--depth=1', self.root.as_uri(), str(target)],
+                           capture_output=True, check=True, timeout=10)
+            result = module.audit(target)
+        self.assertFalse(result['complete'])
+        self.assertTrue(any('Shallow' in issue for issue in result['issues']))
+
+    def test_replace_ref_cannot_hide_original_secret(self):
+        secret = 'gh' + 'p_' + 'C' * 40
+        (self.root / 'file.txt').write_text(secret)
+        self.commit()
+        original = self.git('rev-parse', 'HEAD:file.txt').stdout.strip().decode()
+        replacement = subprocess.run(['git', '-C', str(self.root), 'hash-object', '-w', '--stdin'],
+                                     input=b'safe replacement', capture_output=True, check=True,
+                                     timeout=10).stdout.strip().decode()
+        self.git('replace', original, replacement)
+        result = module.audit(self.root)
+        self.assertTrue(any(item['object'] == original and item['kind'] == 'github-token'
+                            for item in result['findings']))
+        self.assertNotIn(secret, json.dumps(result))

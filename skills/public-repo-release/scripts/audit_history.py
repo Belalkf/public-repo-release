@@ -22,7 +22,7 @@ def audit(root, seconds=60, max_objects=5000, max_bytes=2 * 1024 * 1024, total_b
     environment = {key: value for key, value in os.environ.items() if not key.startswith('GIT_')}
     environment.update(GIT_OPTIONAL_LOCKS='0', GIT_TERMINAL_PROMPT='0',
                        GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_SYSTEM=os.devnull)
-    command = ['git', '--no-optional-locks', '-c', 'core.fsmonitor=false', '-C', str(Path(root).resolve())]
+    command = ['git', '--no-optional-locks', '--no-replace-objects', '-c', 'core.fsmonitor=false', '-C', str(Path(root).resolve())]
     result = {'commits': 0, 'inspected_objects': 0, 'findings': [], 'unreviewed': [], 'issues': []}
 
     def run(arguments, data=None):
@@ -36,6 +36,8 @@ def audit(root, seconds=60, max_objects=5000, max_bytes=2 * 1024 * 1024, total_b
         return reply.stdout
 
     try:
+        if run(['rev-parse', '--is-shallow-repository']).strip() == b'true':
+            result['issues'].append('Shallow repository; earlier history is unavailable')
         ids = run(['rev-list', '--objects', '--all', '--no-object-names']).splitlines()
         if not ids:
             result['issues'].append('No reachable committed history to inspect')

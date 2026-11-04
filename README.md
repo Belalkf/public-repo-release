@@ -12,7 +12,12 @@ The skill is in [skills/public-repo-release](skills/public-repo-release/SKILL.md
 
 ```sh
 mkdir -p "$HOME/.agents/skills"
-ln -s "$PWD/skills/public-repo-release" "$HOME/.agents/skills/public-repo-release"
+destination="$HOME/.agents/skills/public-repo-release"
+if [ -e "$destination" ] || [ -L "$destination" ]; then
+  printf 'Skill destination already exists; choose another name.\n'
+else
+  ln -s "$PWD/skills/public-repo-release" "$destination"
+fi
 ```
 
 Choose a different destination if that name already exists; preserve its contents. The command uses one source folder so edits and future Git history stay here. See [OpenAI's skill documentation](https://learn.chatgpt.com/docs/build-skills) for current discovery paths and refresh behaviour. Other hosts can read SKILL.md and its references directly if they support agent skills; automatic discovery outside the tested environment is not claimed.
@@ -24,7 +29,20 @@ Example requests:
 - “Audit what is still missing from this public release, then complete the authorized fixes.”
 - “Use $public-repo-release to publish this skill repository on GitHub, including a current options review and proportionate hosted checks; do not create a marketplace or registry listing.”
 
-This source package has no remote or publication by default. Publishing this skill itself is a separate explicit action. A future GitHub skill-installer path is `skills/public-repo-release`; no account URL, registry listing or marketplace availability is invented.
+This is an initial public source release under the MIT licence. The install folder is `skills/public-repo-release`. Installing it grants no permission to publish any target repository. No marketplace or package-registry listing is provided.
+
+## Try the helper safely
+
+Create a disposable example with no private files, then inspect its history from this checkout:
+
+```sh
+demo="$(mktemp -d)"
+git -C "$demo" init -q
+git -C "$demo" -c user.name="Synthetic maintainer" -c user.email="fixture@users.noreply.github.com" commit --allow-empty -qm "Synthetic example"
+python3 skills/public-repo-release/scripts/audit_history.py "$demo"
+```
+
+Expect `complete: true` and an empty findings list. The demo creates only a temporary repository; remove that directory when finished. For the agent workflow, start with the preparation-only example above and review its evidence before authorizing publication.
 
 ## Validate
 
@@ -37,4 +55,4 @@ python3 skills/public-repo-release/scripts/audit_history.py .
 
 Run the history helper after creating a local commit. It returns nonzero for findings, incomplete coverage or binary objects requiring manual review. It is a pattern audit, not a security certificate, and reports no candidate secret values. The skill's frontmatter can also be checked with the `quick_validate.py` supplied by Codex's built-in skill-creator; that check does not evaluate model judgment.
 
-[Maintainer rules](AGENTS.md) · [MIT licence](LICENSE) · [Validation and limits](VALIDATION.md)
+[Maintainer rules](AGENTS.md) · [MIT licence](LICENSE) · [Validation and limits](VALIDATION.md) · [Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [Initial release](docs/releases/0.1.0.md)
