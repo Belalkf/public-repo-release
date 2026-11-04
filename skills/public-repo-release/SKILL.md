@@ -29,7 +29,7 @@ For repositories that distribute agent skills, including this skill itself, read
 
 For private-to-public copies, read [private-to-public](references/private-to-public.md). Review the intended reachable Git history and identities, deleted files, binaries/screenshots and distributable archives as well as current source. Use synthetic examples. An empty pattern scan is supporting evidence, not a privacy certificate.
 
-Run the bundled read-only `scripts/audit_history.py PATH` when useful. It scans local reachable history and reports finding types and object IDs without printing candidate secrets. It does not fetch, rewrite, upload, revoke keys or prove that hidden remote refs are clean. Inspect any finding locally before classifying it.
+Run the bundled read-only `scripts/audit_history.py PATH` when useful. It scans local reachable history and reports finding types and object IDs without printing candidate secrets. It does not fetch, rewrite, upload, revoke keys or prove that hidden remote refs are clean. Inspect any finding locally before classifying it. A completed history pass does not cover uncommitted files, external Git LFS payloads or submodule contents; review the actual distribution boundary separately. If the helper rejects an input, preserve it and report the reason rather than fetching missing data or changing its history settings.
 
 If an actual secret was published, revoke/rotate it first through the appropriate authorized process. Removing a current file or rewriting Git cannot retrieve other people's clones. Do not rewrite public history for ordinary bug fixes or to manufacture a development timeline.
 
