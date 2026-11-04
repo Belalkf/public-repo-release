@@ -2,7 +2,7 @@
 
 A reusable agent skill for taking a repository from private/local work to a usable public GitHub project, including the hosting protections and verification that are easy to miss. It helps finish an authorized release without treating a successful push or an empty scanner dashboard as the whole job.
 
-This is an initial skill with helper/package checks and one practical release application; independent agent-behaviour evaluation remains open.
+This is an experimental skill; independent end-to-end evaluation of agent behaviour remains open.
 
 The skill covers the product boundary, newcomer workflow, privacy/history review, supported toolchains, hosted checks, practical branch protection, dependency maintenance, scanner triage and a truthful final handoff. It does not publish anything merely by being installed, and it does not activate paid services or rewrite history by default.
 
@@ -59,4 +59,4 @@ Pass the repository root, not an exported folder inside another checkout. Ordina
 
 A successful result covers committed Git history only, not unsaved files, submodule repositories or external Git LFS content. It is a pattern audit, not a security certificate, and reports no candidate secret values. The skill's frontmatter can also be checked with the `quick_validate.py` supplied by Codex's built-in skill-creator; that check does not evaluate model judgment.
 
-[Maintainer rules](AGENTS.md) · [MIT licence](LICENSE) · [Validation and limits](VALIDATION.md) · [Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [Initial release](docs/releases/0.1.0.md)
+[Maintainer rules](AGENTS.md) · [MIT licence](LICENSE) · [Validation and limits](VALIDATION.md) · [Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [Changes](CHANGELOG.md)
