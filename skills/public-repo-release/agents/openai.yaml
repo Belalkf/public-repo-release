@@ -1,0 +1,4 @@
+interface:
+  display_name: "Public Repo Release"
+  short_description: "Prepare and verify a safe public GitHub release"
+  default_prompt: "Use $public-repo-release to prepare this repository for public GitHub publication and finish the authorized release."
