@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "public-repo-release"
+version = "0.2.0"
+description = "Read-only Git history pattern checks and an optional public-release agent skill"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Public Repo Release contributors"}]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+[project.scripts]
+public-repo-release = "public_repo_release.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Belalkf/public-repo-release"
+Issues = "https://github.com/Belalkf/public-repo-release/issues"
+
+[tool.setuptools]
+include-package-data = false
+packages = ["public_repo_release", "public_repo_release._skill"]
+package-dir = {public_repo_release = "src/public_repo_release", "public_repo_release._skill" = "skills/public-repo-release"}
+
+[tool.setuptools.package-data]
+"public_repo_release._skill" = ["SKILL.md", "agents/*.yaml", "references/*.md", "scripts/*.py"]

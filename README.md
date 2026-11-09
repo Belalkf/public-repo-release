@@ -1,10 +1,29 @@
 # Public Repo Release
 
-A reusable agent skill for taking a repository from private/local work to a usable public GitHub project, including the hosting protections and verification that are easy to miss. It helps finish an authorized release without treating a successful push or an empty scanner dashboard as the whole job.
+A local command for checking committed Git history for sensitive-data patterns, plus an optional agent skill for preparing and verifying public GitHub projects. The command works without an AI account. The skill helps finish an authorized release, including the hosting protections and verification that are easy to miss.
 
 This is an experimental skill; independent end-to-end evaluation of agent behaviour remains open.
 
 The skill covers the product boundary, newcomer workflow, privacy/history review, supported toolchains, hosted checks, practical branch protection, dependency maintenance, scanner triage and a truthful final handoff. It does not publish anything merely by being installed, and it does not activate paid services or rewrite history by default.
+
+## Install with pip
+
+Python 3.9+ is required; history checks also need Git on your command path. In a virtual environment, run:
+
+```sh
+python -m pip install public-repo-release
+public-repo-release audit /path/to/repository
+```
+
+The audit prints JSON without candidate secret values. Exit status is 0 only when the supported history was completely checked and no recognized patterns were found; status 1 means findings or incomplete coverage, and 2 means invalid command arguments. `--seconds 120` changes the audit time limit from its default of 60 seconds. This is a bounded pattern check of local committed history, not a complete security audit or permission to publish. Unsaved files, external Git LFS payloads and submodule contents are excluded; binary objects require manual review. See [the history reference](skills/public-repo-release/references/private-to-public.md) for supported inputs and limits.
+
+Pip installs the command and bundled instructions. To make the optional skill discoverable in Codex, explicitly copy it to your user skill folder:
+
+```sh
+public-repo-release install-skill --user
+```
+
+This creates `~/.agents/skills/public-repo-release`. Refresh skill discovery in your agent, then invoke `$public-repo-release`. Use `install-skill --destination /path/to/new-skill-folder` for another explicit destination. Existing files, folders and links are refused without replacement. A failed or cancelled copy can leave a partial new folder; inspect it and choose another destination rather than overwrite it. Pip installation alone never changes your agent's skill folder or publishes a repository. `python -m public_repo_release` is an alternative when the command is not on your path.
 
 ## Install with the skills CLI
 
@@ -64,12 +83,15 @@ Expect `complete: true` and an empty findings list. The demo creates only a temp
 
 ## Validate
 
-No runtime or test dependencies beyond Python 3.9+ and Git:
+The installed command has no runtime Python dependencies. To validate this checkout with Python 3.9+ and Git:
 
 ```sh
-python3 -m unittest discover -s tests -v
+python3 -m pip install build twine
+python3 scripts/check_distribution.py
 python3 skills/public-repo-release/scripts/audit_history.py .
 ```
+
+The distribution check downloads build tools into isolated environments, builds a source archive and wheel (the ready-to-install archive), rebuilds from the source archive, and tests a fresh installation outside the checkout. It creates `dist` and refuses to replace an existing output folder; choose a new one with `--output-dir /path/to/new-output`. After installing this checkout with `python -m pip install .`, focused tests can also run with `python -m unittest discover -s tests -v`.
 
 Run the history helper after creating a local commit. It returns nonzero for findings, incomplete coverage or binary objects requiring manual review.
 

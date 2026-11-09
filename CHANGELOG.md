@@ -1,6 +1,10 @@
 # Changes
 
-## After v0.1.0 — available on main
+## v0.2.0 — Python command and optional skill
+
+Install with `python -m pip install public-repo-release`. The new `public-repo-release audit PATH` command runs the existing bounded, read-only history check without an agent. `public-repo-release install-skill --user` separately installs the bundled instructions and refuses to replace existing files, folders or links. Both commands also work through `python -m public_repo_release`.
+
+Source archives and wheels contain the same helper and complete skill resources. Release checks rebuild from the source archive and test the installed command outside the checkout. PyPI publishing uses the repository's `publish.yml` workflow and `pypi` environment without a stored PyPI API key. The skill remains experimental; helper tests do not establish agent judgment.
 
 Installation instructions now include the skills CLI, with separate project and user scopes and an explicit distinction between installed instructions and helper prerequisites.
 

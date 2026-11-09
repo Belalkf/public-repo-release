@@ -1,0 +1,5 @@
+include LICENSE README.md CHANGELOG.md VALIDATION.md CONTRIBUTING.md SECURITY.md AGENTS.md
+recursive-include skills/public-repo-release *.md *.yaml *.py
+recursive-include tests *.py
+recursive-include scripts *.py
+global-exclude __pycache__ *.py[cod]

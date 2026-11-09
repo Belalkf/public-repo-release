@@ -7,6 +7,8 @@ The Python/Git tests exercise the bundled history helper and the installable pac
 - Detection of removed synthetic secrets and annotated-tag contents without printing candidate values.
 - Correct repository selection, read-only handling of supported roots/worktrees, and explicit rejection or incomplete coverage for unsupported history settings, missing history and content limits.
 - Internal documentation links and helper execution from an installed-folder copy outside the checkout.
+- Source/wheel builds, an equivalent wheel rebuilt from the source archive, and installed command tests outside the checkout.
+- Command failure status for findings, incomplete coverage, missing Git and invalid arguments; explicit skill installation, existing-path preservation, resource failures and cancelled copies.
 
 Use the commands in [README](README.md#validate) to reproduce them. The [Checks workflow](https://github.com/Belalkf/public-repo-release/actions/workflows/checks.yml) records results for each tested commit; its supported matrix is described in [Contributing](CONTRIBUTING.md). Skill-creator's optional format validator checks metadata and scaffolding, not decision quality.
 
@@ -18,4 +20,4 @@ A successful history pass covers only its supported local committed objects and 
 
 ## Choosing a version
 
-The original v0.1.0 helper predates input-boundary fixes available on main. See [Changes](CHANGELOG.md) before choosing a tagged copy. [Hosting policy](CONTRIBUTING.md#hosting-policy) describes the maintained repository settings; per-commit test results remain in GitHub Actions and pull requests.
+The original v0.1.0 helper predates input-boundary fixes included in v0.2.0, the first PyPI release. See [Changes](CHANGELOG.md) before choosing a tagged copy. [Hosting policy](CONTRIBUTING.md#hosting-policy) describes the maintained repository settings; per-commit test results remain in GitHub Actions and pull requests.
